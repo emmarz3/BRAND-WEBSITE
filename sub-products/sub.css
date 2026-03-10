@@ -1,0 +1,140 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ffe7;
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #00ffe7;
+  box-shadow: 0 4px 10px rgba(0, 255, 231, 0.3);
+}
+
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  color: #e0e0e0;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #00ffe7;
+}
+
+/* Product Sections */
+section {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+section h2 {
+  color: #ff9800;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+/* Product Grid */
+#shorts, #jewelries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;   /* 🔑 Separates products from each other */
+}
+
+/* Product Card */
+.product {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ffe7;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.5);
+}
+
+.product h3 {
+  margin-bottom: 0.5rem;
+  color: #00ffe7;
+}
+
+.product p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0 1rem;
+  color: #ff9800;
+}
+
+/* Product Images */
+.product img {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;   /* Show full image */
+  margin: 0 auto 1rem;
+  border-radius: 8px;
+  border: 2px solid #00ffe7;
+  background: #000;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.7);
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(90deg, #00ffe7, #007bff);
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.6);
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.9);
+  color: #00ffe7;
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 2px solid #00ffe7;
+}

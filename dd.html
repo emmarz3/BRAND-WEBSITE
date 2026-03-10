@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shop</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="pp.css">
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background: #f5f5f5; }
+        h1, h2 { text-align: center; color: #333; }
+        .product { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .product h3 { margin: 0 0 5px 0; }
+        .product p { margin: 0; color: #28a745; font-weight: bold; }
+        button { cursor: pointer; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; font-size: 14px; }
+        button:hover { background: #218838; }
+        
+        .cart-box { background: white; padding: 20px; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .remove-btn { background: #dc3545; padding: 5px 10px; font-size: 12px; margin-left: 10px; }
+        .remove-btn:hover { background: #c82333; }
+        
+        .total { font-size: 20px; font-weight: bold; text-align: right; margin: 15px 0; }
+        
+        .checkout-btn { background-color: #6772e5; width: 100%; padding: 15px; font-size: 18px; }
+        .checkout-btn:hover { background: #5469d4; }
+        
+        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        .empty-cart { text-align: center; color: #999; }
+    </style>
+</head>
+<body>
+
+    <h1>🛒 My Online Store</h1>
+
+    <!-- Products -->
+    <div class="product">
+        <div>
+            <h3>Premium Watch</h3>
+            <p>$50.00</p>
+        </div>
+        <button onclick="addToCart('Premium Watch', 50)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <div>
+            <h3>Leather Bag</h3>
+            <p>$30.00</p>
+        </div>
+        <button onclick="addToCart('Leather Bag', 30)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <div>
+            <h3>Sunglasses</h3>
+            <p>$20.00</p>
+        </div>
+        <button onclick="addToCart('Sunglasses', 20)">Add to Cart</button>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart-box" id="cart-section">
+        <h2>Shopping Cart</h2>
+        <div id="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        
+        <div class="total">Total: $<span id="total-price">0</span></div>
+        
+        <!-- Customer Details -->
+        <div id="customer-details" style="display:none;">
+            <input type="text" id="cust-name" placeholder="Your Full Name" required>
+            <input type="email" id="cust-email" placeholder="Your Email Address" required>
+            <button class="checkout-btn" id="checkout-button">Pay Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize cart array
+        let cart = [];
+
+        // Function to add item to cart
+        function addToCart(name, price) {
+            cart.push({ name: name, price: price });
+            updateCart();
+            alert(name + " added to cart!");
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Remove item at specific index
+            updateCart();
+        }
+
+        // Function to update cart display
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            const totalPriceSpan = document.getElementById('total-price');
+            const checkoutBtn = document.getElementById('checkout-button');
+            const customerDetails = document.getElementById('customer-details');
+            
+            let html = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+                checkoutBtn.style.display = 'none';
+                customerDetails.style.display = 'none';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    html += `
+                        <div class="cart-item">
+                            <span>${item.name}</span>
+                            <span>
+                                $${item.price} 
+                                <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                            </span>
+                        </div>
+                    `;
+                });
+                
+                cartItemsDiv.innerHTML = html;
+                checkoutBtn.style.display = 'block';
+                customerDetails.style.display = 'block';
+            }
+
+            totalPriceSpan.innerText = total;
+        }
+
+        // Initialize cart display on page load
+        updateCart();
+
+        // ---------------------------------------------------------
+        // STRIPE CHECKOUT INTEGRATION
+        // ---------------------------------------------------------
+        
+        // REPLACE THIS with your Stripe Publishable Key
+        var stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
+
+        document.getElementById("checkout-button").addEventListener("click", function() {
+            var name = document.getElementById("cust-name").value;
+            var email = document.getElementById("cust-email").value;
+
+            if(cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            
+            if(!name || !email) {
+                alert("Please enter your name and email.");
+                return;
+            }
+
+            // Send data to create checkout session
+            fetch("create_checkout_session.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    cart: cart,
+                    name: name,
+                    email: email
+                })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(session) {
+                if(session.error) {
+                    alert(session.error);
+                } else {
+                    // Redirect to Stripe
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                }
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function(error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Make sure the backend files are set up correctly.");
+            });
+        });
+    </script>
+</body>
+</html>

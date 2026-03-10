@@ -1,0 +1,128 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #f8bbd0, #f48fb1);
+  color: #4a004e;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Flower Background Animation */
+.flower {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url("images/flower.png"); /* Replace with your flower image */
+  background-size: cover;
+  opacity: 0.7;
+  animation: floatFlowers 20s linear infinite;
+}
+
+.flower:nth-child(1) { left: 10%; animation-duration: 18s; }
+.flower:nth-child(2) { left: 30%; animation-duration: 22s; }
+.flower:nth-child(3) { left: 50%; animation-duration: 25s; }
+.flower:nth-child(4) { left: 70%; animation-duration: 20s; }
+.flower:nth-child(5) { left: 90%; animation-duration: 24s; }
+
+@keyframes floatFlowers {
+  0% { top: -10%; transform: rotate(0deg) scale(0.8); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { top: 110%; transform: rotate(360deg) scale(0.8); }
+}
+
+/* Hero Section */
+.hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 2rem;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  color: #d81b60;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin-bottom: 2rem;
+  color: #ad1457;
+}
+
+.cta-btn {
+  background: linear-gradient(90deg, #f48fb1, #d81b60);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(216, 27, 96, 0.6);
+}
+
+/* Footer */
+footer {
+  background: rgba(255, 182, 193, 0.9);
+  color: #4a004e;
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 2px solid #d81b60;
+  animation: fadeInUp 1.2s ease;
+}
+
+footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+footer nav a {
+  color: #4a004e;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #d81b60;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

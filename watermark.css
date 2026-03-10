@@ -1,0 +1,140 @@
+/* Professional Watermark Styles */
+/* Add your brand name watermark to all pages */
+
+.watermark-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
+}
+
+.watermark-container:hover {
+  opacity: 0.25;
+}
+
+.watermark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(30, 30, 60, 0.9) 100%);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.watermark-icon {
+  font-size: 18px;
+}
+
+.watermark-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #f093fb 0%, #e055a8 50%, #f093fb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* Watermark positioned at bottom-left */
+.watermark-bottom-left {
+  bottom: 20px;
+  left: 20px;
+  right: auto;
+}
+
+/* Watermark positioned at bottom-center */
+.watermark-bottom-center {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+}
+
+/* Watermark positioned at top-right */
+.watermark-top-right {
+  top: 20px;
+  bottom: auto;
+}
+
+/* Watermark positioned at top-left */
+.watermark-top-left {
+  top: 20px;
+  left: 20px;
+  right: auto;
+  bottom: auto;
+}
+
+/* Small watermark variant */
+.watermark-small {
+  padding: 6px 12px;
+}
+
+.watermark-small .watermark-icon {
+  font-size: 14px;
+}
+
+.watermark-small .watermark-text {
+  font-size: 11px;
+}
+
+/* Large watermark variant */
+.watermark-large {
+  padding: 14px 22px;
+}
+
+.watermark-large .watermark-icon {
+  font-size: 22px;
+}
+
+.watermark-large .watermark-text {
+  font-size: 16px;
+}
+
+/* Watermark with border animation */
+.watermark-animated {
+  animation: borderPulse 2s ease-in-out infinite;
+}
+
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(255, 255, 255, 0.1); }
+  50% { border-color: rgba(240, 147, 251, 0.4); }
+}
+
+/* Diagonal watermark (for backgrounds) */
+.watermark-diagonal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+}
+
+.watermark-diagonal .watermark {
+  padding: 20px 40px;
+  font-size: 48px;
+  white-space: nowrap;
+}
+
+/* Print watermark */
+@media print {
+  .watermark-container {
+    display: none;
+  }
+}
+

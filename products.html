@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - My Business Brand</title>
+  <link rel="stylesheet" href="pp.css">
+  <link rel="stylesheet" href="watermark.css">
+</head>
+<style>
+           .cart-box { background: white; padding: 20px; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .remove-btn { background: #dc3545; padding: 5px 10px; font-size: 12px; margin-left: 10px; }
+        .remove-btn:hover { background: #c82333; }
+        
+        .total { font-size: 20px; font-weight: bold; text-align: right; margin: 15px 0; }
+        
+        .checkout-btn { background-color: #6772e5; width: 100%; padding: 15px; font-size: 18px; }
+        .checkout-btn:hover { background: #5469d4; }
+        
+        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        .empty-cart { text-align: center; color: #999; }
+</style>
+<body>
+  
+  <header>
+    <div class="logo"> My Business Brand </div>
+    <nav class="navbar">
+      <a href="index1.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="sub-navbar">
+      <a href="jorts.html">Jorts</a>
+      <a href="jewelry.html">Jewelries</a>
+      <a href="jersey.html">Jerseys</a>
+
+    </div>
+  </header>
+
+
+  <section id="products">
+    <h1>Top Products</h1>
+
+  
+    <h2>Jerseys</h2>
+    <div class="product">
+      <h3>Product 1</h3>
+      <img src="jerseys/Anime Soccer Jersey!New Style Arrival's.jpg" alt="Product 1">
+    </div>
+
+    
+    <h2>Top Shorts</h2>
+    <div class="product">
+      <h3>Short 1</h3>
+      <img src="1\bermuda.jpg" alt="Short 1">
+    </div>
+
+    <h2>Top Jewelries</h2>
+    <div class="product">
+      <h3>Jewelry 1</h3>
+      <img src="jj\Diesel Rings DX1444.jpg" alt="Jewelry 1">
+
+    </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    </div>
+    <script>
+        // Initialize cart array
+        let cart = [];
+
+        // Function to add item to cart
+        function addToCart(name, price) {
+            cart.push({ name: name, price: price });
+            updateCart();
+            alert(name + " added to cart!");
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Remove item at specific index
+            updateCart();
+        }
+
+        // Function to update cart display
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            const totalPriceSpan = document.getElementById('total-price');
+            const checkoutBtn = document.getElementById('checkout-button');
+            const customerDetails = document.getElementById('customer-details');
+            
+            let html = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+                checkoutBtn.style.display = 'none';
+                customerDetails.style.display = 'none';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    html += `
+                        <div class="cart-item">
+                            <span>${item.name}</span>
+                            <span>
+                                $${item.price} 
+                                <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                            </span>
+                        </div>
+                    `;
+                });
+                
+                cartItemsDiv.innerHTML = html;
+                checkoutBtn.style.display = 'block';
+                customerDetails.style.display = 'block';
+            }
+
+            totalPriceSpan.innerText = total;
+        }
+
+        // Initialize cart display on page load
+        updateCart();
+
+        // ---------------------------------------------------------
+        // STRIPE CHECKOUT INTEGRATION
+        // ---------------------------------------------------------
+        
+        // REPLACE THIS with your Stripe Publishable Key
+        var stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
+
+        document.getElementById("checkout-button").addEventListener("click", function() {
+            var name = document.getElementById("cust-name").value;
+            var email = document.getElementById("cust-email").value;
+
+            if(cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            
+            if(!name || !email) {
+                alert("Please enter your name and email.");
+                return;
+            }
+
+            // Send data to create checkout session
+            fetch("create_checkout_session.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    cart: cart,
+                    name: name,
+                    email: email
+                })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(session) {
+                if(session.error) {
+                    alert(session.error);
+                } else {
+                    // Redirect to Stripe
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                }
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function(error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Make sure the backend files are set up correctly.");
+            });
+        });
+    </script>
+  </section>
+
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="watermark.js"></script>
+</body>
+</html>

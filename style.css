@@ -1,0 +1,237 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #e0e0e0;
+  line-height: 1.6;
+  
+
+}
+
+/* Header + Navbar */
+header {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem 2rem;
+  display: flex;
+  flex-wrap: wrap; /* ✅ allows wrapping on small screens */
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #00ffe7;
+  box-shadow: 0 4px 15px rgba(0, 255, 231, 0.3);
+}
+
+.logo {
+  font-size: clamp(1.2rem, 3vw, 1.5rem); /* ✅ responsive font size */
+  font-weight: bold;
+  color: #00ffe7;
+  letter-spacing: 2px;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navbar a {
+  color: #e0e0e0;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #00ffe7;
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #00ffe7;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+  width: 100%;
+}
+
+/* Sub Navbar (Shorts ↔ Jewelries) */
+.sub-navbar {
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-wrap: wrap; /* ✅ wrap links on small screens */
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.8rem;
+  border-top: 1px solid #00ffe7;
+  border-bottom: 1px solid #00ffe7;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.4);
+}
+
+.sub-navbar a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  position: relative;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.sub-navbar a:hover,
+.sub-navbar a.active {
+  color: #00ffe7;
+  text-shadow: 0 0 10px #00ffe7;
+}
+
+.sub-navbar a::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #00ffe7;
+  transition: width 0.3s ease;
+}
+
+.sub-navbar a:hover::before,
+.sub-navbar a.active::before {
+  width: 100%;
+}
+
+/* Products Section */
+#products {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+#products h1 {
+  text-align: center;
+  color: #ff9800;
+  margin-bottom: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+#products h2 {
+  color: #00ffe7;
+  margin: 1.5rem 0;
+  text-align: left;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+/* Product Cards */
+.product {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ffe7;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.5);
+}
+
+.product h3 {
+  margin-bottom: 0.5rem;
+  color: #00ffe7;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.product p {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  margin: 0.5rem 0 1rem;
+  color: #ff9800;
+}
+
+/* Product Images */
+.product img {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto 1rem;
+  border-radius: 8px;
+  border: 2px solid #00ffe7;
+  background: #000;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.7);
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(90deg, #00ffe7, #007bff);
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.6);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar {
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  #products {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar a, .sub-navbar a {
+    margin: 0 5px;
+    font-size: 0.9rem;
+  }
+
+  .product {
+    padding: 1rem;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
